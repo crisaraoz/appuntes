@@ -6,6 +6,7 @@ import './HomeScreen.css';
 
 const HomeScreen = () => {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [subjects, setSubjects] = useState([
     { id: '1', name: 'Matemática' },
@@ -38,6 +39,7 @@ const HomeScreen = () => {
       return subject;
     });
     setSubjects(updatedSubjects);
+    setSearchQuery(""); // Limpiar la cadena de búsqueda al cambiar el nombre de una materia
   };
 
   const handleEditButtonClick = () => {
@@ -94,6 +96,19 @@ const HomeScreen = () => {
       setSelectedSubject(null);
     }
   };
+  const filterSubjects = () => {
+    return subjects.filter((subject) =>
+      subject.name
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .includes(searchQuery
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+        )
+    );
+  };
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -105,8 +120,17 @@ const HomeScreen = () => {
   return (
     <>
       <Header />
+      <div className="search-container">
+      <input
+        type="text"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        placeholder="Buscar materia..."
+        className="search-input"
+      />
+      </div>
       <div className="cards-container">
-        {subjects.map((subject) => (
+        {filterSubjects().map((subject) => (
           <div
             key={subject.id}
             className={`card ${selectedSubject === subject.id ? 'selected' : ''}`}
