@@ -16,6 +16,7 @@ const HomeScreen = () => {
   const [editedSubjectName, setEditedSubjectName] = useState('');
   const [isCreatePopupOpen, setIsCreatePopupOpen] = useState(false);
   const [newSubjectName, setNewSubjectName] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSubjectClick = (subjectId) => {
     if (selectedSubject === subjectId) {
@@ -63,8 +64,15 @@ const HomeScreen = () => {
   };
 
   const handleCreateSubject = () => {
-    setIsCreatePopupOpen(true);
+    if (newSubjectName.trim() !== '') {
+      const newSubjectId = String(subjects.length + 1);
+      const newSubject = { id: newSubjectId, name: newSubjectName };
+      setSubjects([...subjects, newSubject]);
+      closeModal();
+      setNewSubjectName('');
+    }
   };
+  
 
   const handleConfirmCreateSubject = () => {
     const newSubjectId = (subjects.length + 1).toString();
@@ -86,7 +94,14 @@ const HomeScreen = () => {
       setSelectedSubject(null);
     }
   };
-
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setNewSubjectName('');
+  };
   return (
     <>
       <Header />
@@ -131,29 +146,30 @@ const HomeScreen = () => {
         ))}
       </div>
       <div className="buttons-container">
-        <button className="create-subject-button" onClick={handleCreateSubject}>
+        <button className="create-subject-button" onClick={openModal}>
           Crear Materia
         </button>
         <button className="delete-subject-button" onClick={handleDeleteSubject} disabled={!selectedSubject}>
           Borrar Materia
         </button>
       </div>
-      {isCreatePopupOpen && (
-        <div className="create-subject-popup">
-          <input
-            type="text"
-            value={newSubjectName}
-            onChange={(e) => setNewSubjectName(e.target.value)}
-            className="create-subject-input"
-            placeholder="Ingrese el nombre de la materia"
-          />
-          <div className="create-subject-popup-buttons">
-            <button className="create-subject-confirm-button" onClick={handleConfirmCreateSubject}>
-              Confirmar
+      {isModalOpen && (
+        <div className="overlay">
+          <div className="modal">
+            <input
+              type="text"
+              value={newSubjectName}
+              onChange={(e) => setNewSubjectName(e.target.value)}
+              className="modal-input"
+              placeholder="Ingrese el nombre de la materia"
+            />
+            <button className="modal-button" onClick={handleCreateSubject}>
+              Crear
             </button>
-            <button className="create-subject-cancel-button" onClick={handleCancelCreateSubject}>
+            <button className="modal-button" onClick={closeModal}>
               Cancelar
             </button>
+
           </div>
         </div>
       )}
