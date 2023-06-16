@@ -1,0 +1,78 @@
+/* HomeScreen.css */
+ 
+/* HomeScreen.css */
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+.card.selected {
+  background-color: #f0f0f0;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.card-title-input {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.create-subject-button {
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #2e834a;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.delete-subject-button {
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #b31111;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.create-subject-button:hover {
+  background-color: #00b345;
+}
+
+.delete-subject-button:hover {
+  background-color: #d84747;
+}
